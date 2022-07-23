@@ -126,6 +126,8 @@ jobs:
             cd backend
             npm install
             npm audit fix --force
+            npm install --save-dev webpack@5.73.0
+            npm update mkdirp --depth 2
             npm audit --audit-level=critica
 
 workflows:
