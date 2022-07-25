@@ -1,6 +1,5 @@
 version: 2.1
 
-
 commands:
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
@@ -192,8 +191,10 @@ jobs:
           command: |
             cd .circleci/ansible
             ansible-playbook -i inventory.txt configure-server.yml
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
       - destroy-environment:
-          workflow-id: ${CIRCLE_WORKFLOW_ID:0:7} 
+          workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
 
   run-migrations:
     docker:
@@ -201,13 +202,13 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: ~/     
+          at: ~/
       - run:
           name: Install Dependencies
           command: |
             apk add --update --no-cache tar gzip nodejs npm aws-cli curl
       - restore_cache:
-          keys: [backend-build]            
+          keys: [backend-build]
       - run:
           name: Run migrations
           command: |
@@ -224,7 +225,7 @@ jobs:
               curl --insecure https://kvdb.io/P5fmDjXmRs4vQyJAQAuUr9/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
             fi
       - destroy-environment:
-          workflow_id: ${CIRCLE_WORKFLOW_ID:0:7} 
+          workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
 
 workflows:
   default:
