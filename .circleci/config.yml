@@ -30,6 +30,7 @@ commands:
       - run:
           name: Revert migrations
           # Add when this will run
+          when: on_fail
           command: |
             # Curl command here to see if there was a successful migration associated with the workflow id, 
             # store result in SUCCESS variable
@@ -321,7 +322,7 @@ jobs:
             echo "${API_URL}"
             if curl "${API_URL}/api/status" | grep "ok"
             then
-                return 1
+                return 0
             else
                 return 1
             fi
