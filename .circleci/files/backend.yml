@@ -36,9 +36,3 @@ Resources:
         - Key: Name
           Value: !Sub backend-${ID}
 
-Outputs:
-  EC2PublicIPAddress:
-    Description: Public IP for Instance
-    Value: !GetAtt EC2Instance.PublicIp
-    Export:
-      Name: "UdaPeople-EC2PublicIPAddress"
