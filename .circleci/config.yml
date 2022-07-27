@@ -34,9 +34,9 @@ commands:
           command: |
             # Curl command here to see if there was a successful migration associated with the workflow id, 
             # store result in SUCCESS variable
-            SUCCESS=1 # $(curl --insecure  https://kvdb.io/P5thQCXKuMdbXnoXdEHU3o/migration_<< parameters.workflow_id >>)
+            SUCCESS="1" # $(curl --insecure  https://kvdb.io/P5thQCXKuMdbXnoXdEHU3o/migration_<< parameters.workflow_id >>)
             # Logic for reverting the database state
-            if (( $SUCCESS == 1 ));
+            if (( $SUCCESS == "1" ));
             then
               # add environment variables to server
               echo ENVIRONMENT=production > backend/.env
