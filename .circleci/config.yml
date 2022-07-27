@@ -363,13 +363,13 @@ jobs:
 
   cloudfront-update:
     docker:
-      - image: amazon/aws-cli
+      - image: python:3.10-alpine3.16
     steps:
       - checkout
       - run:
           name: Install dependencies
           command: |
-            yum -y install tar gzip npm nodejs
+            apk add --update tar gzip curl nodejs npm aws-cli
       - run:
           name: Update cloudfront distribution
           command: |
@@ -397,13 +397,13 @@ jobs:
 
   cleanup:
     docker:
-      - image: amazon/aws-cli
+      - image: python:3.10-alpine3.16
     steps:
       - checkout
       - run:
           name: Install dependencies
           command: |
-            yum -y install tar npm nodejs gzip
+            apk add --update tar gzip curl nodejs npm aws-cli
       - attach_workspace:
           at: ~/
       - run:
